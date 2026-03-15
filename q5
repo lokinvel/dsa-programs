@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct node {
+    int value;           // stores stack element
+    struct node *next;   // pointer to next node
+};
+
+// Head of the stack
+struct node *head = NULL;
+
+// Push function
+void push(int val) {
+    struct node *newnode = (struct node *)malloc(sizeof(struct node));
+    newnode->value = val;    // store value
+    newnode->next = head;    // link new node to current top
+    head = newnode;          // update top of stack
+}
+
+// Pop function
+void pop() {
+    struct node *temp;
+    if (head == NULL) {
+        printf("Stack is empty\n");
+    } else {
+        printf("Popped element: %d\n", head->value);
+        temp = head;
+        head = head->next;  // move top to next node
+        free(temp);         // free memory of popped node
+    }
+}
+
+// Print the stack
+void printlist() {
+    struct node *temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->value);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+// Main function
+int main() {
+    // Push elements onto stack
+    push(7);
+    push(18);
+    push(31);
+
+    printf("Stack after pushes: ");
+    printlist();
+
+    // Pop element
+    pop();
+
+    printf("Stack after pop: ");
+    printlist();
+
+    return 0;
+}
