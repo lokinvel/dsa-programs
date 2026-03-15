@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int value;
+    struct node* left;
+    struct node* right;
+};
+
+struct node* root = NULL;
+
+/* Insert function */
+void insert(int value) {
+    struct node* tempnode = (struct node*)malloc(sizeof(struct node));
+    struct node* current;
+    struct node* parent;
+
+    tempnode->value = value;
+    tempnode->left = NULL;
+    tempnode->right = NULL;
+
+    if (root == NULL) {
+        root = tempnode;
+        return;
+    }
+
+    current = root;
+    while (1) {
+        parent = current;
+
+        if (value < parent->value) {
+            current = current->left;
+            if (current == NULL) {
+                parent->left = tempnode;
+                return;
+            }
+        } else {
+            current = current->right;
+            if (current == NULL) {
+                parent->right = tempnode;
+                return;
+            }
+        }
+    }
+}
+
+/* Search function */
+struct node* search(int value) {
+    struct node* current = root;
+    printf("Visiting elements: ");
+
+    while (current != NULL && current->value != value) {
+        printf("%d ", current->value);
+        if (value < current->value)
+            current = current->left;
+        else
+            current = current->right;
+    }
+    printf("\n");
+    return current;
+}
+
+/* Preorder traversal */
+void preorder(struct node* root) {
+    if (root != NULL) {
+        printf("%d ", root->value);
+        preorder(root->left);
+        preorder(root->right);
+    }
+}
+
+/* Inorder traversal */
+void inorder(struct node* root) {
+    if (root != NULL) {
+        inorder(root->left);
+        printf("%d ", root->value);
+        inorder(root->right);
+    }
+}
+
+/* Postorder traversal */
+void postorder(struct node* root) {
+    if (root != NULL) {
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d ", root->value);
+    }
+}
+
+/* Main function */
+int main() {
+    int i;
+    int arr[7] = {27, 14, 35, 10, 19, 31, 42};
+
+    for (i = 0; i < 7; i++) {
+        insert(arr[i]);
+    }
+
+    i = 35;
+    struct node* temp = search(i);
+    if (temp != NULL)
+        printf("[%d] Element found\n", temp->value);
+    else
+        printf("[X] Element not found %d\n", i);
+
+    i = 10;
+    temp = search(i);
+    if (temp != NULL)
+        printf("[%d] Element found\n", temp->value);
+    else
+        printf("[X] Element not found %d\n", i);
+
+    printf("Preorder: ");
+    preorder(root);
+    printf("\n");
+
+    printf("Inorder: ");
+    inorder(root);
+    printf("\n");
+
+    printf("Postorder: ");
+    postorder(root);
+    printf("\n");
+
+    return 0;
+}
