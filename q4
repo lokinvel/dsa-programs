@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int value;
+    struct node *next;
+};
+
+int search(struct node *head, int key) {
+    struct node *current = head;
+
+    while (current != NULL) {
+        if (current->value == key)
+            return 1; // Found
+        current = current->next;
+    }
+    return 0; // Not found
+}
+
+int main() {
+    struct node *head;
+    struct node *one = NULL;
+    struct node *two = NULL;
+    struct node *three = NULL;
+    struct node *four = NULL;
+    struct node *five = NULL;
+
+    // Create nodes
+    one = malloc(sizeof(struct node));
+    two = malloc(sizeof(struct node));
+    three = malloc(sizeof(struct node));
+    four = malloc(sizeof(struct node));
+    five = malloc(sizeof(struct node));
+
+    // Assign values
+    one->value = 10;
+    two->value = 15;
+    three->value = 20;
+    four->value = 31;
+    five->value = 33;
+
+    // Link nodes
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = NULL;
+
+    head = one;
+
+    // Search and print Yes/No
+    search(head, 33) ? printf("Yes\n") : printf("No\n");
+    search(head, 10) ? printf("Yes\n") : printf("No\n");
+    search(head, 20) ? printf("Yes\n") : printf("No\n");
+    search(head, 15) ? printf("Yes\n") : printf("No\n");
+    search(head, 31) ? printf("Yes\n") : printf("No\n");
+
+    return 0;
+}
