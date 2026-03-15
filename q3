@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int value;
+    struct node *next;
+};
+
+void printlist(struct node *p) {
+    while (p != NULL) {
+        printf("%d ", p->value);
+        p = p->next;
+    }
+    printf("\n");
+}
+
+void sortlist(struct node *head) {
+    struct node *current = head;
+    struct node *index = NULL;
+    int temp;
+
+    while (current != NULL) {
+        index = current->next;
+        while (index != NULL) {
+            if (current->value > index->value) {
+                temp = current->value;
+                current->value = index->value;
+                index->value = temp;
+            }
+            index = index->next;
+        }
+        current = current->next;
+    }
+}
+
+int main() {
+    struct node *head;
+
+    struct node *one = NULL;
+    struct node *two = NULL;
+    struct node *three = NULL;
+    struct node *four = NULL;
+    struct node *five = NULL;
+
+    one = malloc(sizeof(struct node));
+    two = malloc(sizeof(struct node));
+    three = malloc(sizeof(struct node));
+    four = malloc(sizeof(struct node));
+    five = malloc(sizeof(struct node));
+
+    one->value = 9;
+    two->value = 5;
+    three->value = 75;
+    four->value = 53;
+    five->value = 2;
+
+    one->next = two;
+    two->next = three;
+    three->next = four;
+    four->next = five;
+    five->next = NULL;
+
+    head = one;
+
+    printf("Original List: ");
+    printlist(head);
+
+    sortlist(head);
+
+    printf("Sorted List: ");
+    printlist(head);
+
+    return 0;
+}
